@@ -31,6 +31,7 @@ export default function Home() {
       const timer = setTimeout(() => {
         setCurrentMessageIndex((prev) => (prev + 1) % messages.length);
         setCharIndex(0);
+        setDisplayedText('');
         setIsTyping(true);
       }, 3000);
       return () => clearTimeout(timer);
