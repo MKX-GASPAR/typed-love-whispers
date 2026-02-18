@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirecionando...</title>
+  <script>
+    // Redireciona para index.html mantendo a rota
+    const path = window.location.pathname;
+    const segments = path.split('/').filter(Boolean);
+    
+    // Se a rota contém 'typed-love-whispers', redireciona para a raiz do projeto
+    if (segments.includes('typed-love-whispers')) {
+      // Remove 'typed-love-whispers' do caminho
+      const newPath = '/' + segments.filter(s => s !== 'typed-love-whispers').join('/');
+      window.location.replace('/typed-love-whispers/' + (newPath.slice(1) || ''));
+    } else {
+      // Caso contrário, redireciona para index.html
+      window.location.replace('/typed-love-whispers/');
+    }
+  </script>
+</head>
+<body>
+  <p>Redirecionando...</p>
+</body>
+</html>
