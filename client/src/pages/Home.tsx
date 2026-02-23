@@ -23,13 +23,40 @@ export default function Home() {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
   const [charIndex, setCharIndex] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const currentMessage = messages[currentMessageIndex];
 
+  // Simular carregamento por 4 segundos
   useEffect(() => {
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false);
+    }, 4000);
+    return () => clearTimeout(loadingTimer);
+  }, []);
+
+  useEffect(() => {
+    // Se ainda está carregando, não faz nada
+    if (isLoading) {
+      return;
+    }
+
+    // Se já completou todas as mensagens, não faz nada
+    if (isComplete) {
+      return;
+    }
+
     if (!isTyping) {
+      // Se é a última mensagem, marca como completo
+      if (currentMessageIndex === messages.length - 1) {
+        setIsComplete(true);
+        return;
+      }
+
+      // Caso contrário, vai para próxima mensagem
       const timer = setTimeout(() => {
-        setCurrentMessageIndex((prev) => (prev + 1) % messages.length);
+        setCurrentMessageIndex((prev) => prev + 1);
         setCharIndex(0);
         setDisplayedText('');
         setIsTyping(true);
@@ -46,7 +73,7 @@ export default function Home() {
     } else {
       setIsTyping(false);
     }
-  }, [charIndex, isTyping, currentMessage]);
+  }, [charIndex, isTyping, currentMessage, currentMessageIndex, isComplete, isLoading]);
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden">
@@ -54,28 +81,104 @@ export default function Home() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-red-950/10 pointer-events-none" />
 
       {/* Main content */}
-      <div className="relative z-10 max-w-2xl w-full text-center">
-        {/* Typewriter text */}
-        <div className="font-mono text-lg md:text-2xl text-white/90 leading-relaxed min-h-32 flex items-center justify-center">
-          <span className="inline-block">
-            {displayedText}
-            {isTyping && (
-              <span className="inline-block w-0.5 h-6 md:h-8 bg-red-500 ml-1 animate-pulse" />
-            )}
-          </span>
-        </div>
+      <div className="relative z-10 max-w-2xl w-full">
+        {isLoading ? (
+          // Tela de carregamento com vídeo
+          <div className="flex flex-col items-center justify-center gap-6">
+            {/* Vídeo de carregamento */}
+            <div className="w-32 h-32 md:w-40 md:h-40 rounded-lg overflow-hidden bg-black border border-red-500/30">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              >
+                <source src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663028851866/jsMSkUhmTeXeLCQz.mp4" type="video/mp4" />
+              </video>
+            </div>
 
-        {/* Decorative line */}
-        <div className="mt-12 flex items-center justify-center gap-4">
-          <div className="w-12 h-px bg-red-500/30" />
-          <div className="w-2 h-2 rounded-full bg-red-500/50" />
-          <div className="w-12 h-px bg-red-500/30" />
-        </div>
+            {/* Texto de carregamento */}
+            <div className="text-center">
+              <p className="font-mono text-white/60 text-sm md:text-base">
+                Preparando sua jornada espiritual...
+              </p>
+            </div>
+          </div>
+        ) : !isComplete ? (
+          <>
+            {/* Typewriter text */}
+            <div className="font-mono text-lg md:text-2xl text-white/90 leading-relaxed min-h-32 flex items-center justify-center text-center">
+              <span className="inline-block">
+                {displayedText}
+                {isTyping && (
+                  <span className="inline-block w-0.5 h-6 md:h-8 bg-red-500 ml-1 animate-pulse" />
+                )}
+              </span>
+            </div>
 
-        {/* Message counter */}
-        <div className="mt-8 text-white/40 text-sm font-mono">
-          {currentMessageIndex + 1} / {messages.length}
-        </div>
+            {/* Decorative line */}
+            <div className="mt-12 flex items-center justify-center gap-4">
+              <div className="w-12 h-px bg-red-500/30" />
+              <div className="w-2 h-2 rounded-full bg-red-500/50" />
+              <div className="w-12 h-px bg-red-500/30" />
+            </div>
+
+            {/* Message counter */}
+            <div className="mt-8 text-white/40 text-sm font-mono text-center">
+              {currentMessageIndex + 1} / {messages.length}
+            </div>
+          </>
+        ) : (
+          <>
+            {/* Homem com altar - SVG */}
+            <div className="flex flex-col items-center justify-center gap-8">
+              {/* Figura do homem com altar */}
+              <svg
+                viewBox="0 0 200 300"
+                className="w-32 h-48 md:w-40 md:h-56"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                {/* Cabeça */}
+                <circle cx="100" cy="40" r="20" className="stroke-orange-500" />
+                
+                {/* Corpo */}
+                <line x1="100" y1="60" x2="100" y2="120" className="stroke-orange-500" />
+                
+                {/* Braços */}
+                <line x1="100" y1="80" x2="60" y2="100" className="stroke-orange-500" />
+                <line x1="100" y1="80" x2="140" y2="100" className="stroke-orange-500" />
+                
+                {/* Pernas */}
+                <line x1="100" y1="120" x2="80" y2="160" className="stroke-orange-500" />
+                <line x1="100" y1="120" x2="120" y2="160" className="stroke-orange-500" />
+                
+                {/* Altar na mão direita - retângulo com cruz */}
+                <g transform="translate(140, 95)">
+                  {/* Base do altar */}
+                  <rect x="-15" y="-10" width="30" height="25" className="stroke-red-500" fill="none" />
+                  {/* Topo do altar */}
+                  <rect x="-18" y="-15" width="36" height="8" className="stroke-red-500" fill="none" />
+                  {/* Cruz no altar */}
+                  <line x1="0" y1="-5" x2="0" y2="5" className="stroke-red-500" />
+                  <line x1="-4" y1="0" x2="4" y2="0" className="stroke-red-500" />
+                </g>
+              </svg>
+
+              {/* Mensagem final */}
+              <div className="text-center">
+                <p className="font-mono text-white/80 text-sm md:text-base leading-relaxed max-w-md">
+                  Sua jornada espiritual começou.
+                </p>
+                <p className="font-mono text-red-500/60 text-xs md:text-sm mt-4">
+                  Que a paz de Jesus permaneça em seu coração.
+                </p>
+              </div>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Footer with VINCENTY AI */}
