@@ -86,7 +86,7 @@ export default function Home() {
           // Tela de carregamento com vídeo
           <div className="flex flex-col items-center justify-center gap-6">
             {/* Vídeo de carregamento */}
-            <div className="w-80 h-80 md:w-96 md:h-96 rounded-lg overflow-hidden bg-gray-900 border-0">
+            <div className="w-80 h-80 md:w-96 md:h-96 rounded-lg overflow-hidden bg-orange-600 border-0">
               <video
                 autoPlay
                 loop
