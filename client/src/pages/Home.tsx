@@ -86,13 +86,13 @@ export default function Home() {
           // Tela de carregamento com vídeo
           <div className="flex flex-col items-center justify-center gap-6">
             {/* Vídeo de carregamento */}
-            <div className="w-full h-screen overflow-hidden">
+            <div className="w-full h-96 overflow-hidden flex items-center justify-center bg-black">
               <video
                 autoPlay
                 loop
                 muted
                 playsInline
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               >
                 <source src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663028851866/VicsmoVGMgiZLkqA.mp4" type="video/mp4" />
               </video>
