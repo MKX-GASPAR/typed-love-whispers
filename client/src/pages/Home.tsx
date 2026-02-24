@@ -28,11 +28,11 @@ export default function Home() {
 
   const currentMessage = messages[currentMessageIndex];
 
-  // Simular carregamento por 7 segundos
+  // Simular carregamento por 6 segundos
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
-    }, 7000);
+    }, 6000);
     return () => clearTimeout(loadingTimer);
   }, []);
 
