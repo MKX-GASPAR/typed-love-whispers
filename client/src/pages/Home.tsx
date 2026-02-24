@@ -48,10 +48,12 @@ export default function Home() {
     }
 
     if (!isTyping) {
-      // Se é a última mensagem, marca como completo
+      // Se é a última mensagem, espera 2 segundos antes de marcar como completo
       if (currentMessageIndex === messages.length - 1) {
-        setIsComplete(true);
-        return;
+        const timer = setTimeout(() => {
+          setIsComplete(true);
+        }, 2000);
+        return () => clearTimeout(timer);
       }
 
       // Caso contrário, vai para próxima mensagem
@@ -164,6 +166,8 @@ export default function Home() {
                   {/* Cruz no altar */}
                   <line x1="0" y1="-5" x2="0" y2="5" className="stroke-red-500" />
                   <line x1="-4" y1="0" x2="4" y2="0" className="stroke-red-500" />
+                  {/* Urso polar na mão */}
+                  <text x="0" y="20" fontSize="16" textAnchor="middle" className="fill-white">🐻‍❄️</text>
                 </g>
               </svg>
 
