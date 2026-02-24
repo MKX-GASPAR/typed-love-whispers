@@ -60,7 +60,7 @@ export default function Home() {
         setCharIndex(0);
         setDisplayedText('');
         setIsTyping(true);
-      }, 6000);
+      }, 5000);
       return () => clearTimeout(timer);
     }
 
