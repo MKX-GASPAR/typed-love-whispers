@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 /**
  * Design Philosophy: Intimate Typewriter Romance
@@ -26,7 +26,36 @@ export default function Home() {
   const [isComplete, setIsComplete] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Refs para sons
+  const typewriterSoundRef = useRef(new Audio('/typewriter.wav'));
+  const transitionSoundRef = useRef(new Audio('/transition.wav'));
+  const completionSoundRef = useRef(new Audio('/completion.wav'));
+
   const currentMessage = messages[currentMessageIndex];
+
+  // Função para tocar som de digitação
+  const playTypewriterSound = () => {
+    const sound = typewriterSoundRef.current;
+    sound.currentTime = 0;
+    sound.volume = 0.3;
+    sound.play().catch(() => {});
+  };
+
+  // Função para tocar som de transição
+  const playTransitionSound = () => {
+    const sound = transitionSoundRef.current;
+    sound.currentTime = 0;
+    sound.volume = 0.4;
+    sound.play().catch(() => {});
+  };
+
+  // Função para tocar som de conclusão
+  const playCompletionSound = () => {
+    const sound = completionSoundRef.current;
+    sound.currentTime = 0;
+    sound.volume = 0.5;
+    sound.play().catch(() => {});
+  };
 
   // Simular carregamento por 6 segundos
   useEffect(() => {
@@ -51,6 +80,7 @@ export default function Home() {
       // Se é a última mensagem, espera 2 segundos antes de marcar como completo
       if (currentMessageIndex === messages.length - 1) {
         const timer = setTimeout(() => {
+          playCompletionSound();
           setIsComplete(true);
         }, 2000);
         return () => clearTimeout(timer);
@@ -58,6 +88,7 @@ export default function Home() {
 
       // Caso contrário, vai para próxima mensagem
       const timer = setTimeout(() => {
+        playTransitionSound();
         setCurrentMessageIndex((prev) => prev + 1);
         setCharIndex(0);
         setDisplayedText('');
@@ -68,6 +99,7 @@ export default function Home() {
 
     if (charIndex < currentMessage.length) {
       const timer = setTimeout(() => {
+        playTypewriterSound();
         setDisplayedText((prev) => prev + currentMessage[charIndex]);
         setCharIndex((prev) => prev + 1);
       }, 50);
