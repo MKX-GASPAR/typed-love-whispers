@@ -157,17 +157,9 @@ export default function Home() {
                 <line x1="100" y1="120" x2="80" y2="160" className="stroke-orange-500" />
                 <line x1="100" y1="120" x2="120" y2="160" className="stroke-orange-500" />
                 
-                {/* Altar na mão direita - retângulo com cruz */}
+                {/* Urso polar na mão direita */}
                 <g transform="translate(140, 95)">
-                  {/* Base do altar */}
-                  <rect x="-15" y="-10" width="30" height="25" className="stroke-red-500" fill="none" />
-                  {/* Topo do altar */}
-                  <rect x="-18" y="-15" width="36" height="8" className="stroke-red-500" fill="none" />
-                  {/* Cruz no altar */}
-                  <line x1="0" y1="-5" x2="0" y2="5" className="stroke-red-500" />
-                  <line x1="-4" y1="0" x2="4" y2="0" className="stroke-red-500" />
-                  {/* Urso polar na mão */}
-                  <text x="0" y="20" fontSize="16" textAnchor="middle" className="fill-white">🐻‍❄️</text>
+                  <text x="0" y="8" fontSize="32" textAnchor="middle" className="fill-white">🐻‍❄️</text>
                 </g>
               </svg>
 
