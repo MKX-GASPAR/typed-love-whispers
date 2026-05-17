@@ -213,4 +213,4 @@ Se tiver dúvidas ou encontrar problemas, abra uma [issue no GitHub](https://git
 
 **Desenvolvido com ❤️ usando React e Tailwind CSS**
 
-**Marca:** VINCENTY AI
+**Marca:** Chevel ai
